@@ -4,11 +4,34 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CookieTest {
+
+    @Test
+    public void constructorTest() {
+        // given
+        String expectedName = "Chocolate Chip";
+        List<String> expectedIngredients = new ArrayList<>(Arrays.asList("chocolate chips",
+                "flour", "sugar"));
+        int expectedCalories = 100;
+        boolean expectedContainsNuts = true;
+        int expectedQuantity = 50;
+        double expectedPrice = 1.50;
+        // when
+        Cookie testCookie = new Cookie(expectedName, expectedIngredients, expectedCalories,
+                expectedContainsNuts, expectedQuantity, expectedPrice);
+        // then
+        Assert.assertEquals(expectedName, testCookie.getName());
+        Assert.assertEquals(expectedIngredients, testCookie.getIngredients());
+        Assert.assertEquals(expectedCalories, testCookie.getCalories());
+        Assert.assertEquals(expectedContainsNuts, testCookie.getContainsNuts());
+        Assert.assertEquals(expectedQuantity, testCookie.getQuantity());
+        Assert.assertEquals(expectedPrice, testCookie.getPrice(), .001);
+    }
 
     @Test
     public void setNameTest() {

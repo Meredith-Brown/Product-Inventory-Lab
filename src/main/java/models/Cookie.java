@@ -10,6 +10,18 @@ public class Cookie {
     private int quantity;
     private double price;
 
+    public  Cookie() {}
+
+    public Cookie(String name, List<String> ingredients, int calories, boolean containsNuts,
+                       int quantity, double price) {
+        this.name = name;
+        this.ingredients = ingredients;
+        this.calories = calories;
+        this.containsNuts = containsNuts;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
