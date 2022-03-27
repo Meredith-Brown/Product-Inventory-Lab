@@ -4,11 +4,38 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LightFixtureTest {
+
+    @Test
+    public void constructorTest() {
+        // given
+        String expectedPartNumber = "2BLT2-35K-3000-WH";
+        String expectedManufacturer = "Lithonia";
+        String expectedType = "2X2";
+        String expectedFinish = "white";
+        int expectedColorCCT = 3500;
+        int expectedLumenOutput = 3000;
+        int expectedQuantity = 6;
+        double expectedPrice = 91.50;
+        // when
+        LightFixture testLightFixture = new LightFixture(expectedPartNumber, expectedManufacturer,
+                expectedType, expectedFinish, expectedColorCCT, expectedLumenOutput, expectedQuantity,
+                expectedPrice);
+        // then
+        Assert.assertEquals(expectedPartNumber, testLightFixture.getPartNumber());
+        Assert.assertEquals(expectedManufacturer, testLightFixture.getManufacturer());
+        Assert.assertEquals(expectedType, testLightFixture.getType());
+        Assert.assertEquals(expectedFinish, testLightFixture.getFinish());
+        Assert.assertEquals(expectedColorCCT, testLightFixture.getColorCCT());
+        Assert.assertEquals(expectedLumenOutput, testLightFixture.getLumenOutput());
+        Assert.assertEquals(expectedQuantity, testLightFixture.getQuantity());
+        Assert.assertEquals(expectedPrice, testLightFixture.getPrice(), .001);
+    }
 
     @Test
     public void setPartNumberTest() {

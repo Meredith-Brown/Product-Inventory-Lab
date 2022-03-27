@@ -12,6 +12,20 @@ public class LightFixture {
     private int quantity;
     private double price;
 
+    public  LightFixture() {}
+
+    public LightFixture(String partNumber, String manufacturer, String type, String finish, int colorCCT,
+                  int lumenOutput, int quantity, double price) {
+        this.partNumber = partNumber;
+        this.manufacturer = manufacturer;
+        this.type = type;
+        this.finish = finish;
+        this.colorCCT = colorCCT;
+        this.lumenOutput = lumenOutput;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public void setPartNumber(String partNumber) {
         this.partNumber = partNumber;
     }
