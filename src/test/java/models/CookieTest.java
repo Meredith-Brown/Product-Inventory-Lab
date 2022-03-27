@@ -20,7 +20,7 @@ class CookieTest {
         int expectedCalories = 100;
         boolean expectedContainsNuts = true;
         int expectedQuantity = 50;
-        double expectedPrice = 1.50;
+        float expectedPrice = 1.50f;
         // when
         Cookie testCookie = new Cookie(expectedName, expectedIngredients, expectedCalories,
                 expectedContainsNuts, expectedQuantity, expectedPrice);
@@ -94,7 +94,7 @@ class CookieTest {
     @Test
     public void setPriceTest() {
         // given
-        double expected = 1.50;
+        float expected = 1.50f;
         // when
         Cookie testCookie = new Cookie();
         testCookie.setPrice(expected);

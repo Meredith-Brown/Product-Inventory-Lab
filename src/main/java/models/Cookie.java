@@ -8,12 +8,12 @@ public class Cookie {
     private int calories;
     private boolean containsNuts;
     private int quantity;
-    private double price;
+    private float price;
 
     public  Cookie() {}
 
     public Cookie(String name, List<String> ingredients, int calories, boolean containsNuts,
-                       int quantity, double price) {
+                       int quantity, float price) {
         this.name = name;
         this.ingredients = ingredients;
         this.calories = calories;
@@ -62,11 +62,11 @@ public class Cookie {
         return quantity;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 }
