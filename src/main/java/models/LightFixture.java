@@ -10,12 +10,12 @@ public class LightFixture {
     private int colorCCT;
     private int lumenOutput;
     private int quantity;
-    private double price;
+    private float price;
 
     public  LightFixture() {}
 
     public LightFixture(String partNumber, String manufacturer, String type, String finish, int colorCCT,
-                  int lumenOutput, int quantity, double price) {
+                  int lumenOutput, int quantity, float price) {
         this.partNumber = partNumber;
         this.manufacturer = manufacturer;
         this.type = type;
@@ -82,11 +82,11 @@ public class LightFixture {
         return quantity;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 }

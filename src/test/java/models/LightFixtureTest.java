@@ -21,7 +21,7 @@ class LightFixtureTest {
         int expectedColorCCT = 3500;
         int expectedLumenOutput = 3000;
         int expectedQuantity = 6;
-        double expectedPrice = 91.50;
+        float expectedPrice = 91.50f;
         // when
         LightFixture testLightFixture = new LightFixture(expectedPartNumber, expectedManufacturer,
                 expectedType, expectedFinish, expectedColorCCT, expectedLumenOutput, expectedQuantity,
@@ -117,7 +117,7 @@ class LightFixtureTest {
     @Test
     public void setPriceTest() {
         // given
-        double expected = 91.50;
+        float expected = 91.50f;
         // when
         LightFixture testLightFixture = new LightFixture();
         testLightFixture.setPrice(expected);
