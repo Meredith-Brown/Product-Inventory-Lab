@@ -13,6 +13,7 @@ public class LightFixtureService {
         LightFixture createdLightFixture = new LightFixture(partNumber, manufacturer, type, finish,
                 colorCCT, lumenOutput, quantity, price);
         inventory.add(createdLightFixture);
+        System.out.println("\n" + partNumber + " created.");
         return createdLightFixture;
     }
 
