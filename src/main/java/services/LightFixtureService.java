@@ -1,12 +1,25 @@
 package services;
 
+import models.Cookie;
 import models.LightFixture;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LightFixtureService {
-    List<LightFixture> inventory = new ArrayList<>();
+    private List<LightFixture> inventory = new ArrayList<>();
+
+    private LightFixtureService() {}
+
+    private static LightFixtureService lightFixtureService = new LightFixtureService();
+
+    public static LightFixtureService shared() {
+        return lightFixtureService;
+    }
+
+    public List<LightFixture> getInventory() {
+        return inventory;
+    }
 
     public LightFixture create(String partNumber, String manufacturer, String type, String finish,
                                int colorCCT, int lumenOutput, int quantity, float price) {

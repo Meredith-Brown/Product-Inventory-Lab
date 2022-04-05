@@ -14,13 +14,9 @@ class AppTest {
     CookieService cookieService = CookieService.shared();
     String[] ingredients = {"Flour", "Sugar", "Butter"};
     List<String> ingredientsList = Arrays.asList(ingredients);
-    LightFixtureService lightFixtureService = new LightFixtureService();
-    LightFixture lightFixture = lightFixtureService.create("2BLT2Test", "Lithonia",
-            "2X2", "White", 3500, 3000, 80, 91.25f);
+    LightFixtureService lightFixtureService = LightFixtureService.shared();
 
 
-    // test update cookie - price
-    // test update light fixture - part number
     // test update light fixture - manufacturer
     // test update light fixture - type
     // test update light fixture - finish
@@ -112,5 +108,46 @@ class AppTest {
         Assert.assertEquals(expected, actual);
         // clear
         cookieService.deleteCookie("updateProduct4-AppTest");
+    }
+
+    @Test
+    void updateProduct5() { // test update cookie - price
+        // given
+        Cookie cookie = cookieService.create("updateProduct5-AppTest", ingredientsList, 150,
+                false, 23, 2.00f);
+        String productToUpdate = "Cookie";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("updateProduct5-AppTest");
+        fieldAndNewInput.add("Price");
+        String expectedString = "2.25";
+        fieldAndNewInput.add(expectedString);
+        float expected = Float.parseFloat(expectedString);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        float actual = cookieService.findCookie("updateProduct5-AppTest").getPrice();
+        Assert.assertEquals(expected, actual, 0.01);
+        // clear
+        cookieService.deleteCookie("updateProduct5-AppTest");
+    }
+
+    @Test
+    void updateProduct6() { // test update light fixture - part number
+        // given
+        LightFixture lightFixture = lightFixtureService.create("AppTest6-UPDATE", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 91.25f);
+        String productToUpdate = "Light Fixture";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("AppTest6-UPDATE");
+        fieldAndNewInput.add("Part Number");
+        String expected = "AppTest6";
+        fieldAndNewInput.add(expected);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        String actual = lightFixtureService.findLightFixture(expected).getPartNumber();
+        Assert.assertEquals(expected, actual);
+        // clear
+        lightFixtureService.deleteLightFixture("AppTest6");
     }
 }

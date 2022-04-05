@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class App {
     private CookieService cookieService = CookieService.shared();
-    private LightFixtureService lightFixtureService = new LightFixtureService();
+    private LightFixtureService lightFixtureService = LightFixtureService.shared();
 
     public static void main(String... args) {
         App application = new App();
