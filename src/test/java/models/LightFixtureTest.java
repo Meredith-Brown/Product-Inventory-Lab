@@ -25,7 +25,7 @@ class LightFixtureTest {
         // when
         LightFixture testLightFixture = new LightFixture(expectedPartNumber, expectedManufacturer,
                 expectedType, expectedFinish, expectedColorCCT, expectedLumenOutput, expectedQuantity,
-                expectedPrice);
+                expectedPrice, 1);
         // then
         Assert.assertEquals(expectedPartNumber, testLightFixture.getPartNumber());
         Assert.assertEquals(expectedManufacturer, testLightFixture.getManufacturer());

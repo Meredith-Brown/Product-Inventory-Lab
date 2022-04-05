@@ -3,6 +3,7 @@ package models;
 import java.util.List;
 
 public class LightFixture {
+    private int id;
     private String partNumber;
     private String manufacturer;
     private String type;
@@ -15,7 +16,7 @@ public class LightFixture {
     public  LightFixture() {}
 
     public LightFixture(String partNumber, String manufacturer, String type, String finish, int colorCCT,
-                  int lumenOutput, int quantity, float price) {
+                  int lumenOutput, int quantity, float price, int id) {
         this.partNumber = partNumber;
         this.manufacturer = manufacturer;
         this.type = type;
@@ -24,6 +25,7 @@ public class LightFixture {
         this.lumenOutput = lumenOutput;
         this.quantity = quantity;
         this.price = price;
+        this.id = id;
     }
 
     public void setPartNumber(String partNumber) {

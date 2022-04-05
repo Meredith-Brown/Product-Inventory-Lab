@@ -21,10 +21,12 @@ public class LightFixtureService {
         return inventory;
     }
 
+    private static int nextID = 1;
+
     public LightFixture create(String partNumber, String manufacturer, String type, String finish,
                                int colorCCT, int lumenOutput, int quantity, float price) {
         LightFixture createdLightFixture = new LightFixture(partNumber, manufacturer, type, finish,
-                colorCCT, lumenOutput, quantity, price);
+                colorCCT, lumenOutput, quantity, price, nextID++);
         inventory.add(createdLightFixture);
         System.out.println("\n" + partNumber + " created.");
         return createdLightFixture;

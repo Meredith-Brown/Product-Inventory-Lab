@@ -23,7 +23,7 @@ class CookieTest {
         float expectedPrice = 1.50f;
         // when
         Cookie testCookie = new Cookie(expectedName, expectedIngredients, expectedCalories,
-                expectedContainsNuts, expectedQuantity, expectedPrice);
+                expectedContainsNuts, expectedQuantity, expectedPrice, 1);
         // then
         Assert.assertEquals(expectedName, testCookie.getName());
         Assert.assertEquals(expectedIngredients, testCookie.getIngredients());

@@ -3,6 +3,7 @@ package models;
 import java.util.List;
 
 public class Cookie {
+    private int id;
     private String name;
     private List<String> ingredients;
     private int calories;
@@ -13,13 +14,14 @@ public class Cookie {
     public  Cookie() {}
 
     public Cookie(String name, List<String> ingredients, int calories, boolean containsNuts,
-                       int quantity, float price) {
+                       int quantity, float price, int id) {
         this.name = name;
         this.ingredients = ingredients;
         this.calories = calories;
         this.containsNuts = containsNuts;
         this.quantity = quantity;
         this.price = price;
+        this.id = id;
     }
 
     public void setName(String name) {

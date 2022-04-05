@@ -20,9 +20,11 @@ public class CookieService {
         return inventory;
     }
 
+    private static int nextID = 1;
+
     public Cookie create(String name, List<String> ingredients, int calories, boolean containsNuts,
                          int quantity, float price) {
-        Cookie createdCookie = new Cookie(name, ingredients, calories, containsNuts, quantity, price);
+        Cookie createdCookie = new Cookie(name, ingredients, calories, containsNuts, quantity, price, nextID++);
         inventory.add(createdCookie);
         return createdCookie;
     }
