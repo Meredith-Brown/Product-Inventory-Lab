@@ -16,17 +16,6 @@ class AppTest {
     List<String> ingredientsList = Arrays.asList(ingredients);
     LightFixtureService lightFixtureService = LightFixtureService.shared();
 
-
-    // test update light fixture - manufacturer
-    // test update light fixture - type
-    // test update light fixture - finish
-    // test update light fixture - cct
-    // test update light fixture - lumen output
-    // test update light fixture - quantity
-    // test update light fixture - price
-
-    // product to update, field, new input
-
     @Test
     void updateProduct1() { // test update cookie - name
         // given
@@ -150,4 +139,89 @@ class AppTest {
         // clear
         lightFixtureService.deleteLightFixture("AppTest6");
     }
+
+    @Test
+    void updateProduct7() { // test update light fixture - manufacturer
+        // given
+        LightFixture lightFixture = lightFixtureService.create("AppTest7", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 91.25f);
+        String productToUpdate = "Light Fixture";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("AppTest7");
+        fieldAndNewInput.add("Manufacturer");
+        String expected = "Acuity";
+        fieldAndNewInput.add(expected);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        String actual = lightFixtureService.findLightFixture("AppTest7").getManufacturer();
+        Assert.assertEquals(expected, actual);
+        // clear
+        lightFixtureService.deleteLightFixture("AppTest7");
+    }
+
+    @Test
+    void updateProduct8() { // test update light fixture - type
+        // given
+        LightFixture lightFixture = lightFixtureService.create("AppTest8", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 91.25f);
+        String productToUpdate = "Light Fixture";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("AppTest8");
+        fieldAndNewInput.add("Type");
+        String expected = "Troffer";
+        fieldAndNewInput.add(expected);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        String actual = lightFixtureService.findLightFixture("AppTest8").getType();
+        Assert.assertEquals(expected, actual);
+        // clear
+        lightFixtureService.deleteLightFixture("AppTest8");
+    }
+
+    @Test
+    void updateProduct9() { // test update light fixture - finish
+        // given
+        LightFixture lightFixture = lightFixtureService.create("AppTest9", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 91.25f);
+        String productToUpdate = "Light Fixture";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("AppTest9");
+        fieldAndNewInput.add("Finish");
+        String expected = "Matte White";
+        fieldAndNewInput.add(expected);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        String actual = lightFixtureService.findLightFixture("AppTest9").getFinish();
+        Assert.assertEquals(expected, actual);
+        // clear
+        lightFixtureService.deleteLightFixture("AppTest9");
+    }
+
+    @Test
+    void updateProduct10() { // test update light fixture - CCT
+        // given
+        LightFixture lightFixture = lightFixtureService.create("AppTest10", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 91.25f);
+        String productToUpdate = "Light Fixture";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("AppTest10");
+        fieldAndNewInput.add("CCT");
+        String expectedString = "4000";
+        fieldAndNewInput.add(expectedString);
+        int expected = Integer.parseInt(expectedString);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        int actual = lightFixtureService.findLightFixture("AppTest10").getColorCCT();
+        Assert.assertEquals(expected, actual);
+        // clear
+        lightFixtureService.deleteLightFixture("AppTest10");
+    }
 }
+
+// test update light fixture - lumen output
+// test update light fixture - quantity
+// test update light fixture - price
