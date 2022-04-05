@@ -1,17 +1,27 @@
 package services;
 
-import models.Cookie;
 import models.LightFixture;
+import utils.CSVUtils;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LightFixtureService {
     private List<LightFixture> inventory = new ArrayList<>();
 
-    private LightFixtureService() {}
+    private LightFixtureService() throws IOException {}
 
-    private static LightFixtureService lightFixtureService = new LightFixtureService();
+    private static LightFixtureService lightFixtureService;
+    static {
+        try {
+            lightFixtureService = new LightFixtureService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static LightFixtureService shared() {
         return lightFixtureService;
@@ -55,5 +65,26 @@ public class LightFixtureService {
             }
         }
         return false;
+    }
+
+    public void writeToFile() throws IOException { // TODO - add to main method as part of exit process
+        String csvFile = "/Users/meredith/dev/LightFixtureInventory.csv";
+        FileWriter writer = new FileWriter(csvFile);
+        CSVUtils.writeLine(writer, new ArrayList<String>(Arrays.asList(String.valueOf(nextID))));
+        for (LightFixture l : inventory) {
+            List<String> list = new ArrayList<>();
+            list.add(l.getPartNumber());
+            list.add(l.getManufacturer());
+            list.add(l.getType());
+            list.add(l.getFinish());
+            list.add(String.valueOf(l.getColorCCT()));
+            list.add(String.valueOf(l.getLumenOutput()));
+            list.add(String.valueOf(l.getQuantity()));
+            list.add(String.valueOf(l.getPrice()));
+            list.add(String.valueOf(l.getID()));
+            CSVUtils.writeLine(writer, list);
+        }
+        writer.flush();
+        writer.close();
     }
 }

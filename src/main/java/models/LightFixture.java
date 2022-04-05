@@ -91,4 +91,8 @@ public class LightFixture {
     public float getPrice() {
         return price;
     }
+
+    public int getID() {
+        return id;
+    }
 }

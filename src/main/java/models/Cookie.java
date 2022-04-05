@@ -71,4 +71,8 @@ public class Cookie {
     public float getPrice() {
         return price;
     }
+
+    public int getID() {
+        return id;
+    }
 }
