@@ -4,6 +4,7 @@ import models.LightFixture;
 import services.CookieService;
 import services.LightFixtureService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 // TODO - BEYOND MVP:
@@ -18,13 +19,15 @@ public class App {
     private CookieService cookieService = CookieService.shared();
     private LightFixtureService lightFixtureService = LightFixtureService.shared();
 
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException {
         App application = new App();
         Console.printWelcome();
         application.initialize();
     }
 
-    public void initialize() { // TODO - add code for Get Report
+    public void initialize() throws IOException { // TODO - add code for Get Report
+        cookieService.loadData();
+        lightFixtureService.loadData();
         while (true) {
             String mainMenuInput = Console.printMainMenu();
             if (mainMenuInput.equalsIgnoreCase("Create New Product")) {
@@ -83,6 +86,8 @@ public class App {
                 String cookieOrLightFixtureOrAll = Console.cookieOrLightFixtureOrAll();
                 // call method
             } else {
+                cookieService.writeToFile();
+                lightFixtureService.writeToFile();
                 break;
             }
 

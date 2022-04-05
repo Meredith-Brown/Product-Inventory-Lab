@@ -1,10 +1,10 @@
 package services;
 
+import models.Cookie;
 import models.LightFixture;
 import utils.CSVUtils;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +67,7 @@ public class LightFixtureService {
         return false;
     }
 
-    public void writeToFile() throws IOException { // TODO - add to main method as part of exit process
+    public void writeToFile() throws IOException {
         String csvFile = "/Users/meredith/dev/LightFixtureInventory.csv";
         FileWriter writer = new FileWriter(csvFile);
         CSVUtils.writeLine(writer, new ArrayList<String>(Arrays.asList(String.valueOf(nextID))));
@@ -86,5 +86,31 @@ public class LightFixtureService {
         }
         writer.flush();
         writer.close();
+    }
+
+    public void loadData() throws FileNotFoundException {
+        String csvFile = "/Users/meredith/dev/LightFixtureInventory.csv";
+        String line = "";
+        String csvSplitBy = ",";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            nextID = Integer.parseInt(br.readLine());
+            while ((line = br.readLine()) != null) {
+                String[] loadedData = line.split(csvSplitBy);
+                String partNumber = loadedData[0];
+                String manufacturer = loadedData[1];
+                String type = loadedData[2];
+                String finish = loadedData[3];
+                int colorCCT = Integer.parseInt(loadedData[4]);
+                int lumenOutput = Integer.parseInt(loadedData[5]);
+                int quantity = Integer.parseInt(loadedData[6]);
+                float price = Float.parseFloat(loadedData[7]);
+                int id = Integer.parseInt(loadedData[8]);
+                inventory.add(new LightFixture(partNumber, manufacturer, type, finish, colorCCT,
+                        lumenOutput, quantity, price, id));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

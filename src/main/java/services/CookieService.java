@@ -3,8 +3,7 @@ package services;
 import models.Cookie;
 import utils.CSVUtils;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,14 +64,14 @@ public class CookieService {
         return false;
     }
 
-    public void writeToFile() throws IOException { // TODO - add to main method as part of exit process
+    public void writeToFile() throws IOException {
         String csvFile = "/Users/meredith/dev/CookieInventory.csv";
         FileWriter writer = new FileWriter(csvFile);
         CSVUtils.writeLine(writer, new ArrayList<String>(Arrays.asList(String.valueOf(nextID))));
         for (Cookie c : inventory) {
             List<String> list = new ArrayList<>();
             list.add(c.getName());
-            list.add(String.valueOf(c.getIngredients())); // will this work?
+            list.add(String.valueOf(c.getIngredients()));
             list.add(String.valueOf(c.getCalories()));
             list.add(String.valueOf(c.getContainsNuts()));
             list.add(String.valueOf(c.getQuantity()));
@@ -82,5 +81,31 @@ public class CookieService {
         }
         writer.flush();
         writer.close();
+    }
+
+    public void loadData() throws FileNotFoundException {
+        String csvFile = "/Users/meredith/dev/CookieInventory.csv";
+        String line = "";
+        String csvSplitBy = ",";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            nextID = Integer.parseInt(br.readLine());
+            while ((line = br.readLine()) != null) {
+                String[] loadedData = line.split(csvSplitBy);
+                String name = loadedData[0];
+                List<String> ingredients = new ArrayList<>();
+                for (int i = 1; i < loadedData.length - 5; i++) {
+                    ingredients.add(loadedData[i]);
+                }
+                int calories = Integer.parseInt(loadedData[loadedData.length-5]);
+                boolean containsNuts = Boolean.parseBoolean(loadedData[loadedData.length-4]);
+                int quantity = Integer.parseInt(loadedData[loadedData.length-3]);
+                float price = Float.parseFloat(loadedData[loadedData.length-2]);
+                int id = Integer.parseInt(loadedData[loadedData.length-1]);
+                inventory.add(new Cookie(name, ingredients, calories, containsNuts, quantity, price, id));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
