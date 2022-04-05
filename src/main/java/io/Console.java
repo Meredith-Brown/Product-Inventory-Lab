@@ -176,6 +176,12 @@ public class Console<T> { // TODO - error handling for this class
         return fieldAndNewInput;
     }
 
+    public static String deleteInput() {
+        System.out.println("Please enter the name of the product you would like to delete:");
+        String input = getStringInput();
+        return input;
+    }
+
     public static String getStringInput() {
         Scanner scanner = new Scanner(System.in);
         String userInput = scanner.nextLine();

@@ -24,7 +24,7 @@ public class App {
         application.initialize();
     }
 
-    public void initialize() { // TODO - flesh this out
+    public void initialize() { // TODO - add code for Get Report
         while (true) {
             String mainMenuInput = Console.printMainMenu();
             if (mainMenuInput.equalsIgnoreCase("Create New Product")) {
@@ -72,9 +72,11 @@ public class App {
             else if (mainMenuInput.equalsIgnoreCase("Delete Products")) {
                 String cookieOrLightFixture = Console.cookieOrLightFixture();
                 if (cookieOrLightFixture.equalsIgnoreCase("Cookie")) {
-                    // call method - cookie
+                    String cookieToDelete = Console.deleteInput();
+                    cookieService.deleteCookie(cookieToDelete);
                 } else {
-                    // call method - light fixture
+                    String lightFixtureToDelete = Console.deleteInput();
+                    lightFixtureService.deleteLightFixture(lightFixtureToDelete);
                 }
             }
             else if (mainMenuInput.equalsIgnoreCase("Get Report")) {
