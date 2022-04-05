@@ -1,16 +1,19 @@
 package io;
 
+import models.Cookie;
+import models.LightFixture;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Console { // TODO - error handling for this class
+public class Console<T> { // TODO - error handling for this class
 
     public static void printWelcome() {
         System.out.println("**************************************************" + "\n" +
                 "***           Welcome and Bienvenue            ***" + "\n" +
                 "***                    to                      ***" + "\n" +
                 "***          ZipCo Inventory Manager           ***" + "\n" +
-                "**************************************************");
+                "**************************************************" + "\n");
     }
 
     public static String printMainMenu() {
@@ -20,7 +23,7 @@ public class Console { // TODO - error handling for this class
                 + "Update Products" + "\n"
                 + "Delete Products" + "\n"
                 + "Get Report" + "\n"
-                + "Exit");
+                + "Exit" + "\n");
         String input = getStringInput();
         return input;
     }
@@ -59,9 +62,13 @@ public class Console { // TODO - error handling for this class
         ArrayList<String> ingredients = new ArrayList<>();
         System.out.println("Please list all ingredients, with each ingredient on a new line. Enter " +
                 "'done' when complete.");
-        String input = getStringInput();
-        while (!input.equalsIgnoreCase("done")) {
-            ingredients.add(input);
+        while (true) {
+            String input = getStringInput();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            } else {
+                ingredients.add(input);
+            }
         }
         return ingredients;
     }
@@ -77,6 +84,96 @@ public class Console { // TODO - error handling for this class
             allInputs.add(input);
         }
         return allInputs;
+    }
+
+    public static <T> void printAll(T[] array) {
+        String product = "";
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] instanceof Cookie) {
+                product = ((Cookie) array[i]).getName();
+            } else if (array[i] instanceof LightFixture) {
+                product = ((LightFixture) array[i]).getPartNumber();
+            }
+            System.out.println(product + "\n");
+        }
+    }
+
+    public static ArrayList<String> cookieUpdateInformation() {
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        System.out.println("Please enter the name of the cookie you would like to update:");
+        String input = getStringInput();
+        fieldAndNewInput.add(input);
+        System.out.println("Please enter the field you would like to update: Name, Calories, " +
+                "Contains Nuts?, Quantity In Stock, Price");
+        input = getStringInput();
+        fieldAndNewInput.add(input);
+        if (input.equalsIgnoreCase("Name")) {
+            System.out.println("Enter name:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Calories")) {
+            System.out.println("Enter calories:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Contains Nuts?")) {
+            System.out.println("Enter True or False:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Quantity In Stock")) {
+            System.out.println("Enter quantity:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Price")) {
+            System.out.println("Enter price:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        }
+        return fieldAndNewInput;
+    }
+
+    public static ArrayList<String> lightFixtureUpdateInformation() {
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        System.out.println("Please enter the name of the light fixture you would like to update:");
+        String input = getStringInput();
+        fieldAndNewInput.add(input);
+        System.out.println("Please enter the field you would like to update: Part Number, Manufacturer, " +
+                "Type, Finish, CCT, Lumen Output, Quantity In Stock, Price");
+        input = getStringInput();
+        fieldAndNewInput.add(input);
+        if (input.equalsIgnoreCase("Part Number")) {
+            System.out.println("Enter part number:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Manufacturer")) {
+            System.out.println("Enter manufacturer:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Type")) {
+            System.out.println("Enter type:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Finish")) {
+            System.out.println("Enter finish:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("CCT")) {
+            System.out.println("Enter CCT:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Lumen Output")) {
+            System.out.println("Enter lumen output:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Quantity In Stock")) {
+            System.out.println("Enter quantity:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        } else if (input.equalsIgnoreCase("Price")) {
+            System.out.println("Enter price:");
+            input = getStringInput();
+            fieldAndNewInput.add(input);
+        }
+        return fieldAndNewInput;
     }
 
     public static String getStringInput() {

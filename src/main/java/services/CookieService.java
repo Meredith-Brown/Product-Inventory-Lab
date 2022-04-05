@@ -6,7 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CookieService {
-    List<Cookie> inventory = new ArrayList<>();
+    private List<Cookie> inventory = new ArrayList<>();
+
+    private CookieService() {}
+
+    private static CookieService cookieService = new CookieService();
+
+    public static CookieService shared() {
+        return cookieService;
+    }
+
+    public List<Cookie> getInventory() {
+        return inventory;
+    }
 
     public Cookie create(String name, List<String> ingredients, int calories, boolean containsNuts,
                          int quantity, float price) {
