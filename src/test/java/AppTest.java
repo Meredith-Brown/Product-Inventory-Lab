@@ -14,15 +14,11 @@ class AppTest {
     CookieService cookieService = CookieService.shared();
     String[] ingredients = {"Flour", "Sugar", "Butter"};
     List<String> ingredientsList = Arrays.asList(ingredients);
-    Cookie cookie = cookieService.create("Sugar", ingredientsList, 150, false,
-            23, 2.00f);
     LightFixtureService lightFixtureService = new LightFixtureService();
-    LightFixture lightFixture = lightFixtureService.create("2BLT2", "Lithonia",
+    LightFixture lightFixture = lightFixtureService.create("2BLT2Test", "Lithonia",
             "2X2", "White", 3500, 3000, 80, 91.25f);
 
 
-    // test update cookie - contains nuts
-    // test update cookie - quantity
     // test update cookie - price
     // test update light fixture - part number
     // test update light fixture - manufacturer
@@ -38,11 +34,13 @@ class AppTest {
     @Test
     void updateProduct1() { // test update cookie - name
         // given
+        Cookie cookie = cookieService.create("SugarTest", ingredientsList, 150,
+                false, 23, 2.00f);
         String productToUpdate = "Cookie";
         ArrayList<String> fieldAndNewInput = new ArrayList<>();
-        fieldAndNewInput.add("Sugar");
+        fieldAndNewInput.add("SugarTest");
         fieldAndNewInput.add("Name");
-        String expected = "Sugar - Unfrosted";
+        String expected = "SugarTest - Unfrosted";
         fieldAndNewInput.add(expected);
         // when
         app.updateProduct(productToUpdate, fieldAndNewInput);
@@ -50,15 +48,17 @@ class AppTest {
         String actual = cookieService.findCookie(expected).getName();
         Assert.assertEquals(expected, actual);
         // clear
-        cookieService.deleteCookie(expected);
+        cookieService.deleteCookie("SugarTest - Unfrosted");
     }
 
     @Test
     void updateProduct2() { // test update cookie - calories
         // given
+        Cookie cookie = cookieService.create("SugarTest", ingredientsList, 150,
+                false, 23, 2.00f);
         String productToUpdate = "Cookie";
         ArrayList<String> fieldAndNewInput = new ArrayList<>();
-        fieldAndNewInput.add("Sugar");
+        fieldAndNewInput.add("SugarTest");
         fieldAndNewInput.add("Calories");
         String expectedString = "225";
         fieldAndNewInput.add(expectedString);
@@ -66,9 +66,51 @@ class AppTest {
         // when
         app.updateProduct(productToUpdate, fieldAndNewInput);
         // then
-        int actual = cookieService.findCookie("Sugar").getCalories();
+        int actual = cookieService.findCookie("SugarTest").getCalories();
         Assert.assertEquals(expected, actual);
         // clear
-        cookieService.deleteCookie("Sugar");
+        cookieService.deleteCookie("SugarTest");
+    }
+
+    @Test
+    void updateProduct3() { // test update cookie - contains nuts
+        // given
+        Cookie cookie = cookieService.create("updateProduct3-AppTest", ingredientsList, 150,
+                false, 23, 2.00f);
+        String productToUpdate = "Cookie";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("updateProduct3-AppTest");
+        fieldAndNewInput.add("Contains Nuts?");
+        String expectedString = "true";
+        fieldAndNewInput.add(expectedString);
+        boolean expected = Boolean.parseBoolean(expectedString);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        boolean actual = cookieService.findCookie("updateProduct3-AppTest").getContainsNuts();
+        Assert.assertEquals(expected, actual);
+        // clear
+        cookieService.deleteCookie("updateProduct3-AppTest");
+    }
+
+    @Test
+    void updateProduct4() { // test update cookie - quantity
+        // given
+        Cookie cookie = cookieService.create("updateProduct4-AppTest", ingredientsList, 150,
+                false, 23, 2.00f);
+        String productToUpdate = "Cookie";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("updateProduct4-AppTest");
+        fieldAndNewInput.add("Quantity In Stock");
+        String expectedString = "47";
+        fieldAndNewInput.add(expectedString);
+        int expected = Integer.parseInt(expectedString);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        int actual = cookieService.findCookie("updateProduct4-AppTest").getQuantity();
+        Assert.assertEquals(expected, actual);
+        // clear
+        cookieService.deleteCookie("updateProduct4-AppTest");
     }
 }
