@@ -220,8 +220,67 @@ class AppTest {
         // clear
         lightFixtureService.deleteLightFixture("AppTest10");
     }
-}
 
-// test update light fixture - lumen output
-// test update light fixture - quantity
-// test update light fixture - price
+    @Test
+    void updateProduct11() { // test update light fixture - lumen output
+        // given
+        LightFixture lightFixture = lightFixtureService.create("AppTest11", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 91.25f);
+        String productToUpdate = "Light Fixture";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("AppTest11");
+        fieldAndNewInput.add("Lumen Output");
+        String expectedString = "4000";
+        fieldAndNewInput.add(expectedString);
+        int expected = Integer.parseInt(expectedString);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        int actual = lightFixtureService.findLightFixture("AppTest11").getLumenOutput();
+        Assert.assertEquals(expected, actual);
+        // clear
+        lightFixtureService.deleteLightFixture("AppTest11");
+    }
+
+    @Test
+    void updateProduct12() { // test update light fixture - quantity
+        // given
+        LightFixture lightFixture = lightFixtureService.create("AppTest12", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 91.25f);
+        String productToUpdate = "Light Fixture";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("AppTest12");
+        fieldAndNewInput.add("Quantity In Stock");
+        String expectedString = "74";
+        fieldAndNewInput.add(expectedString);
+        int expected = Integer.parseInt(expectedString);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        int actual = lightFixtureService.findLightFixture("AppTest12").getQuantity();
+        Assert.assertEquals(expected, actual);
+        // clear
+        lightFixtureService.deleteLightFixture("AppTest12");
+    }
+
+    @Test
+    void updateProduct13() { // test update light fixture - price
+        // given
+        LightFixture lightFixture = lightFixtureService.create("AppTest13", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 91.25f);
+        String productToUpdate = "Light Fixture";
+        ArrayList<String> fieldAndNewInput = new ArrayList<>();
+        fieldAndNewInput.add("AppTest13");
+        fieldAndNewInput.add("Price");
+        String expectedString = "92.50";
+        fieldAndNewInput.add(expectedString);
+        float expected = Float.parseFloat(expectedString);
+        // when
+        app.updateProduct(productToUpdate, fieldAndNewInput);
+        // then
+        float actual = lightFixtureService.findLightFixture("AppTest13").getPrice();
+        Assert.assertEquals(expected, actual, 0.001);
+        // clear
+        lightFixtureService.deleteLightFixture("AppTest13");
+    }
+}

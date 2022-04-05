@@ -88,7 +88,7 @@ public class App {
 
     }
 
-    public void updateProduct(String productToUpdate, ArrayList<String> fieldAndNewInput) { // TODO - add test
+    public void updateProduct(String productToUpdate, ArrayList<String> fieldAndNewInput) {
         if (productToUpdate.equalsIgnoreCase("Cookie")) {
             if (fieldAndNewInput.get(1).equalsIgnoreCase("Name")) {
                 cookieService.findCookie(fieldAndNewInput.get(0)).setName(fieldAndNewInput.get(2));
