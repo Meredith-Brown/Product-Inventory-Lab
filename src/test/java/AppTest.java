@@ -283,4 +283,28 @@ class AppTest {
         // clear
         lightFixtureService.deleteLightFixture("AppTest13");
     }
+
+    @Test
+    void valueOfInventory() {
+        // given
+        LightFixture lightFixture1 = lightFixtureService.create("ValueOfInventoryTest-1", "Lithonia",
+                "2X2", "White", 3500, 3000, 10, 10.00f);
+        LightFixture lightFixture2 = lightFixtureService.create("ValueOfInventoryTest-2", "Lithonia",
+                "2X2", "White", 3500, 3000, 10, 91.25f);
+        LightFixture lightFixture3 = lightFixtureService.create("ValueOfInventoryTest-3", "Lithonia",
+                "2X2", "White", 3500, 3000, 80, 75.00f);
+        List<LightFixture> inventory = new ArrayList<>();
+        inventory.add(lightFixture1);
+        inventory.add(lightFixture2);
+        inventory.add(lightFixture3);
+        float expected = 7012.50f;
+        // when
+        float actual = app.valueOfInventory(inventory);
+        // then
+        Assert.assertEquals(expected, actual, 0.001);
+        // clear
+        lightFixtureService.deleteLightFixture("ValueOfInventoryTest-1");
+        lightFixtureService.deleteLightFixture("ValueOfInventoryTest-2");
+        lightFixtureService.deleteLightFixture("ValueOfInventoryTest-3");
+    }
 }

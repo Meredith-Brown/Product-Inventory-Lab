@@ -1,8 +1,6 @@
 package models;
 
-import java.util.List;
-
-public class LightFixture {
+public class LightFixture implements InventoryItem {
     private int id;
     private String partNumber;
     private String manufacturer;

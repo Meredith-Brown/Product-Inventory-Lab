@@ -1,11 +1,13 @@
 import io.Console;
 import models.Cookie;
+import models.InventoryItem;
 import models.LightFixture;
 import services.CookieService;
 import services.LightFixtureService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 // TODO - BEYOND MVP:
 //  - add "return to main menu" option
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 //  - implement switch statements to condense code
 //  - add a way to update cookie ingredients
 
-public class App {
+public class App<T extends InventoryItem> { // TODO - confirm adequate test coverage
     private CookieService cookieService = CookieService.shared();
     private LightFixtureService lightFixtureService = LightFixtureService.shared();
 
@@ -84,7 +86,13 @@ public class App {
             }
             else if (mainMenuInput.equalsIgnoreCase("Get Report")) {
                 String cookieOrLightFixtureOrAll = Console.cookieOrLightFixtureOrAll();
-                // call method
+                if (cookieOrLightFixtureOrAll.equalsIgnoreCase("Cookie")) {
+                    // call method - cookie - nut free, value of inventory
+                } else if (cookieOrLightFixtureOrAll.equalsIgnoreCase("Light Fixture")) {
+                    // call method - light fixture - value of inventory, fixtures by type
+                } else {
+                    // call method - all - value of inventory
+                }
             } else {
                 cookieService.writeToFile();
                 lightFixtureService.writeToFile();
@@ -137,5 +145,13 @@ public class App {
                 lightFixtureService.findLightFixture(fieldAndNewInput.get(0)).setPrice(Float.parseFloat(fieldAndNewInput.get(2)));
             }
         }
+    }
+
+    public float valueOfInventory(List<T> inventory) {
+        float value = 0;
+        for (T item : inventory) {
+            value = value + ((float)item.getQuantity() * item.getPrice());
+        }
+        return value;
     }
 }
