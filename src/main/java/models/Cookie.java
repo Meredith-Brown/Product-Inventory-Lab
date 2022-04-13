@@ -2,7 +2,7 @@ package models;
 
 import java.util.List;
 
-public class Cookie implements InventoryItem {
+public class Cookie {
     private int id;
     private String name;
     private List<String> ingredients;

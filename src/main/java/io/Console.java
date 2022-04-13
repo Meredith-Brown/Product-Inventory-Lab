@@ -176,6 +176,21 @@ public class Console<T> { // TODO - error handling for this class
         return fieldAndNewInput;
     }
 
+    public static int requestReportType(String string) {
+        if (string.equalsIgnoreCase("Cookie")) {
+            System.out.println("Select report type: 'List Nut-Free Cookies'");
+        } else if (string.equalsIgnoreCase("Light Fixture")) {
+            System.out.println("Select report type: 'Get Fixtures of Type'");
+        }
+        String input = getStringInput();
+        String completeInput = (string + ", " + input);
+        switch (completeInput) {
+            case "Cookie, List Nut-Free Cookies": return 1;
+            case "Light Fixture, Get Fixtures By Type": return 2;
+        }
+        return 0;
+    }
+
     public static String deleteInput() {
         System.out.println("Please enter the name of the product you would like to delete:");
         String input = getStringInput();

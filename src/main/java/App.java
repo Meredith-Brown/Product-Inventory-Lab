@@ -1,13 +1,12 @@
 import io.Console;
 import models.Cookie;
-import models.InventoryItem;
 import models.LightFixture;
 import services.CookieService;
 import services.LightFixtureService;
+import services.ReportGenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 // TODO - BEYOND MVP:
 //  - add "return to main menu" option
@@ -16,8 +15,9 @@ import java.util.List;
 //  - if cookie or light fixture with same name already exists, prevent creation/ask for new name
 //  - implement switch statements to condense code
 //  - add a way to update cookie ingredients
+//  - add more reports
 
-public class App<T extends InventoryItem> { // TODO - confirm adequate test coverage
+public class App { // TODO - confirm adequate test coverage
     private CookieService cookieService = CookieService.shared();
     private LightFixtureService lightFixtureService = LightFixtureService.shared();
 
@@ -27,7 +27,7 @@ public class App<T extends InventoryItem> { // TODO - confirm adequate test cove
         application.initialize();
     }
 
-    public void initialize() throws IOException { // TODO - add code for Get Report
+    public void initialize() throws IOException {
         cookieService.loadData();
         lightFixtureService.loadData();
         while (true) {
@@ -85,13 +85,12 @@ public class App<T extends InventoryItem> { // TODO - confirm adequate test cove
                 }
             }
             else if (mainMenuInput.equalsIgnoreCase("Get Report")) {
+                ReportGenerator generator = new ReportGenerator();
                 String cookieOrLightFixtureOrAll = Console.cookieOrLightFixtureOrAll();
-                if (cookieOrLightFixtureOrAll.equalsIgnoreCase("Cookie")) {
-                    // call method - cookie - nut free, value of inventory
-                } else if (cookieOrLightFixtureOrAll.equalsIgnoreCase("Light Fixture")) {
-                    // call method - light fixture - value of inventory, fixtures by type
-                } else {
-                    // call method - all - value of inventory
+                int report = Console.requestReportType(cookieOrLightFixtureOrAll);
+                switch (report) {
+                    case 1: generator.listNutFreeCookies();
+                    case 2: generator.getFixturesByType();
                 }
             } else {
                 cookieService.writeToFile();
@@ -145,13 +144,5 @@ public class App<T extends InventoryItem> { // TODO - confirm adequate test cove
                 lightFixtureService.findLightFixture(fieldAndNewInput.get(0)).setPrice(Float.parseFloat(fieldAndNewInput.get(2)));
             }
         }
-    }
-
-    public float valueOfInventory(List<T> inventory) {
-        float value = 0;
-        for (T item : inventory) {
-            value = value + ((float)item.getQuantity() * item.getPrice());
-        }
-        return value;
     }
 }

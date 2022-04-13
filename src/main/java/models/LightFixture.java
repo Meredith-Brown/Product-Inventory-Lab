@@ -1,6 +1,6 @@
 package models;
 
-public class LightFixture implements InventoryItem {
+public class LightFixture {
     private int id;
     private String partNumber;
     private String manufacturer;
