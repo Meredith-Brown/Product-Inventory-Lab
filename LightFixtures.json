@@ -1,0 +1,11 @@
+[ {
+  "id" : 1,
+  "partNumber" : "LCAT22",
+  "manufacturer" : "Hubbell",
+  "type" : "2X2",
+  "finish" : "white",
+  "colorCCT" : 3500,
+  "lumenOutput" : 3000,
+  "quantity" : 65,
+  "price" : 98.75
+} ]
