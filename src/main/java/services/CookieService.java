@@ -1,9 +1,14 @@
 package services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import models.Cookie;
 import utils.CSVUtils;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +16,11 @@ import java.util.List;
 public class CookieService {
     private List<Cookie> inventory = new ArrayList<>();
 
-    private CookieService() throws IOException {}
+    private CookieService() throws IOException {
+    }
 
     private static CookieService cookieService;
+
     static {
         try {
             cookieService = new CookieService();
@@ -64,48 +71,33 @@ public class CookieService {
         return false;
     }
 
-    public void writeToFile() throws IOException {
+    public void writeNextIDToFile() throws IOException {
         String csvFile = "/Users/meredith/dev/CookieInventory.csv";
         FileWriter writer = new FileWriter(csvFile);
         CSVUtils.writeLine(writer, new ArrayList<String>(Arrays.asList(String.valueOf(nextID))));
-        for (Cookie c : inventory) {
-            List<String> list = new ArrayList<>();
-            list.add(c.getName());
-            list.add(String.valueOf(c.getIngredients()));
-            list.add(String.valueOf(c.getCalories()));
-            list.add(String.valueOf(c.getContainsNuts()));
-            list.add(String.valueOf(c.getQuantity()));
-            list.add(String.valueOf(c.getPrice()));
-            list.add(String.valueOf(c.getID()));
-            CSVUtils.writeLine(writer, list);
-        }
         writer.flush();
         writer.close();
     }
 
-    public void loadData() throws FileNotFoundException {
-        String csvFile = "/Users/meredith/dev/CookieInventory.csv";
-        String line = "";
-        String csvSplitBy = ",";
+    public void writeJSON() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+        writer.writeValue(new File("Cookies.json"), inventory);
+    }
 
+    public void loadNextID() throws FileNotFoundException {
+        String csvFile = "/Users/meredith/dev/CookieInventory.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             nextID = Integer.parseInt(br.readLine());
-            while ((line = br.readLine()) != null) {
-                String[] loadedData = line.split(csvSplitBy);
-                String name = loadedData[0];
-                List<String> ingredients = new ArrayList<>();
-                for (int i = 1; i < loadedData.length - 5; i++) {
-                    ingredients.add(loadedData[i]);
-                }
-                int calories = Integer.parseInt(loadedData[loadedData.length-5]);
-                boolean containsNuts = Boolean.parseBoolean(loadedData[loadedData.length-4]);
-                int quantity = Integer.parseInt(loadedData[loadedData.length-3]);
-                float price = Float.parseFloat(loadedData[loadedData.length-2]);
-                int id = Integer.parseInt(loadedData[loadedData.length-1]);
-                inventory.add(new Cookie(name, ingredients, calories, containsNuts, quantity, price, id));
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void loadCookies() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        inventory = objectMapper.readValue(new File("Cookies.json"), new
+                TypeReference<List<Cookie>>() {});
+    }
+
 }

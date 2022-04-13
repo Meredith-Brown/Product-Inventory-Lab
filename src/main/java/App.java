@@ -28,8 +28,10 @@ public class App { // TODO - confirm adequate test coverage
     }
 
     public void initialize() throws IOException {
-        cookieService.loadData();
-        lightFixtureService.loadData();
+        cookieService.loadNextID();
+        cookieService.loadCookies();
+        lightFixtureService.loadNextID();
+        lightFixtureService.loadLightFixtures();
         while (true) {
             String mainMenuInput = Console.printMainMenu();
             if (mainMenuInput.equalsIgnoreCase("Create New Product")) {
@@ -93,8 +95,10 @@ public class App { // TODO - confirm adequate test coverage
                     case 2: generator.getFixturesByType();
                 }
             } else {
-                cookieService.writeToFile();
-                lightFixtureService.writeToFile();
+                cookieService.writeNextIDToFile();
+                cookieService.writeJSON();
+                lightFixtureService.writeNextIDToFile();
+                lightFixtureService.writeJSON();
                 break;
             }
 

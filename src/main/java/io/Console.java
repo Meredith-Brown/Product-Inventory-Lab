@@ -180,7 +180,7 @@ public class Console<T> { // TODO - error handling for this class
         if (string.equalsIgnoreCase("Cookie")) {
             System.out.println("Select report type: 'List Nut-Free Cookies'");
         } else if (string.equalsIgnoreCase("Light Fixture")) {
-            System.out.println("Select report type: 'Get Fixtures of Type'");
+            System.out.println("Select report type: 'Get Fixtures By Type'");
         }
         String input = getStringInput();
         String completeInput = (string + ", " + input);

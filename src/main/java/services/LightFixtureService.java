@@ -1,5 +1,9 @@
 package services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import models.Cookie;
 import models.LightFixture;
 import utils.CSVUtils;
@@ -12,9 +16,11 @@ import java.util.List;
 public class LightFixtureService {
     private List<LightFixture> inventory = new ArrayList<>();
 
-    private LightFixtureService() throws IOException {}
+    private LightFixtureService() throws IOException {
+    }
 
     private static LightFixtureService lightFixtureService;
+
     static {
         try {
             lightFixtureService = new LightFixtureService();
@@ -67,50 +73,81 @@ public class LightFixtureService {
         return false;
     }
 
-    public void writeToFile() throws IOException {
+    public void writeNextIDToFile() throws IOException {
         String csvFile = "/Users/meredith/dev/LightFixtureInventory.csv";
         FileWriter writer = new FileWriter(csvFile);
         CSVUtils.writeLine(writer, new ArrayList<String>(Arrays.asList(String.valueOf(nextID))));
-        for (LightFixture l : inventory) {
-            List<String> list = new ArrayList<>();
-            list.add(l.getPartNumber());
-            list.add(l.getManufacturer());
-            list.add(l.getType());
-            list.add(l.getFinish());
-            list.add(String.valueOf(l.getColorCCT()));
-            list.add(String.valueOf(l.getLumenOutput()));
-            list.add(String.valueOf(l.getQuantity()));
-            list.add(String.valueOf(l.getPrice()));
-            list.add(String.valueOf(l.getID()));
-            CSVUtils.writeLine(writer, list);
-        }
         writer.flush();
         writer.close();
     }
 
-    public void loadData() throws FileNotFoundException {
-        String csvFile = "/Users/meredith/dev/LightFixtureInventory.csv";
-        String line = "";
-        String csvSplitBy = ",";
+    public void writeJSON() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+        writer.writeValue(new File("LightFixtures.json"), inventory);
+    }
 
+    public void loadNextID() throws FileNotFoundException {
+        String csvFile = "/Users/meredith/dev/LightFixtureInventory.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             nextID = Integer.parseInt(br.readLine());
-            while ((line = br.readLine()) != null) {
-                String[] loadedData = line.split(csvSplitBy);
-                String partNumber = loadedData[0];
-                String manufacturer = loadedData[1];
-                String type = loadedData[2];
-                String finish = loadedData[3];
-                int colorCCT = Integer.parseInt(loadedData[4]);
-                int lumenOutput = Integer.parseInt(loadedData[5]);
-                int quantity = Integer.parseInt(loadedData[6]);
-                float price = Float.parseFloat(loadedData[7]);
-                int id = Integer.parseInt(loadedData[8]);
-                inventory.add(new LightFixture(partNumber, manufacturer, type, finish, colorCCT,
-                        lumenOutput, quantity, price, id));
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void loadLightFixtures() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        inventory = objectMapper.readValue(new File("LightFixtures.json"), new
+                TypeReference<List<LightFixture>>() {});
+    }
+
 }
+
+//    public void writeToFile() throws IOException {
+//        String csvFile = "/Users/meredith/dev/LightFixtureInventory.csv";
+//        FileWriter writer = new FileWriter(csvFile);
+//        CSVUtils.writeLine(writer, new ArrayList<String>(Arrays.asList(String.valueOf(nextID))));
+//        for (LightFixture l : inventory) {
+//            List<String> list = new ArrayList<>();
+//            list.add(l.getPartNumber());
+//            list.add(l.getManufacturer());
+//            list.add(l.getType());
+//            list.add(l.getFinish());
+//            list.add(String.valueOf(l.getColorCCT()));
+//            list.add(String.valueOf(l.getLumenOutput()));
+//            list.add(String.valueOf(l.getQuantity()));
+//            list.add(String.valueOf(l.getPrice()));
+//            list.add(String.valueOf(l.getID()));
+//            CSVUtils.writeLine(writer, list);
+//        }
+//        writer.flush();
+//        writer.close();
+//    }
+//
+//    public void loadData() throws FileNotFoundException {
+//        String csvFile = "/Users/meredith/dev/LightFixtureInventory.csv";
+//        String line = "";
+//        String csvSplitBy = ",";
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+//            nextID = Integer.parseInt(br.readLine());
+//            while ((line = br.readLine()) != null) {
+//                String[] loadedData = line.split(csvSplitBy);
+//                String partNumber = loadedData[0];
+//                String manufacturer = loadedData[1];
+//                String type = loadedData[2];
+//                String finish = loadedData[3];
+//                int colorCCT = Integer.parseInt(loadedData[4]);
+//                int lumenOutput = Integer.parseInt(loadedData[5]);
+//                int quantity = Integer.parseInt(loadedData[6]);
+//                float price = Float.parseFloat(loadedData[7]);
+//                int id = Integer.parseInt(loadedData[8]);
+//                inventory.add(new LightFixture(partNumber, manufacturer, type, finish, colorCCT,
+//                        lumenOutput, quantity, price, id));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
